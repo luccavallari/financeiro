@@ -4,8 +4,8 @@ Sistema que permite que o usuário controle suas contas a pagar e receber
 
 Colaboradores:
 
-* [Allan Gonçalves da Cruz (Desenvolvedor web)] (https://github.com/Allangcruz)
-* [Eduardo Ferreira de Souza (Desenvolvedor web)] (https://github.com/fseduardo)
+* [Allan Gonçalves da Cruz](https://github.com/Allangcruz) - Desenvolvedor web 
+* [Eduardo Ferreira de Souza](https://github.com/fseduardo) - Desenvolvedor web 
 
 ## Tecnologias utilizadas
 
