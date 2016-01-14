@@ -15,6 +15,6 @@ Colaboradores:
 * Apache - 2.4.7
 
 ### Frontend
-* Jquery - 2.1.4
+* Jquery - 2.2.0
 * Bootstrap - 3.3.6
 * jquery-validate - 1.14.0
