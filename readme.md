@@ -16,5 +16,5 @@ Colaboradores:
 
 ### Frontend
 * Jquery - 2.1.4
-* Bootstrap - 3.8.1
+* Bootstrap - 3.3.6
 * jquery-validate - 1.14.0
