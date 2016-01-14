@@ -11,4 +11,36 @@ class Pessoa extends CI_Controller {
 		$this->load->view('pessoa');
 		$this->load->view('footer');
 	}
+
+    public function setValidate()
+    {
+        
+    }         
+    
+    public function create()
+    {
+    
+    }
+    
+    public function read()
+    {
+        
+    }
+    
+    public function readById()
+    {
+    
+    }
+    
+    public function update()
+    {
+        
+    } 
+    
+    public function destroy()
+    {
+    
+    }
+    
+ 
 }

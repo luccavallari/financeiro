@@ -1,8 +1,7 @@
 <!-- Grid -->
 <main class="container view-grid">
     <ol class="breadcrumb">
-      <li><a href="#">Cliente</a></li>
-      <li><a href="#" class="active">Listagem de cliente</a></li>
+      <li><a href="javascript:;" class="active">Clientes</a></li>
     </ol>
     
     <form action="pessoa" class="form-horizontal" id="form_pessoa_consultar">
@@ -23,7 +22,7 @@
                             <span class="glyphicon glyphicon-search"></span>
                             Consultar
                         </a>
-                        <a href="#" class="btn btn-primary" >
+                        <a href="javascript:showViewForm();" class="btn btn-primary" >
                             <span class="glyphicon glyphicon-plus">
                             </span> 
                             Novo
@@ -52,8 +51,18 @@
 <!-- Form -->
 <main class="container view-form hidden">
     <ol class="breadcrumb">
-      <li><a href="#">Cliente</a></li>
-      <li><a href="#" class="active">Cadastro</a></li>
+      <li><a href="javascript:showViewGrid();">Cliente</a></li>
+      <li><a href="javascript:;" class="active">Cadastro</a></li>
     </ol>
 </main>
 <!-- Fim Form -->
+
+<!-- Javascripts -->
+<script src="<?php echo base_url();?>assets/js/principal.js"></script>
+<script src="<?php echo base_url();?>assets/js/crud.js"></script>
+<script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
+<script src="<?php echo base_url();?>assets/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo base_url();?>assets/jquery-validation/messages_pt_BR.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
+<script src="<?php echo base_url();?>assets/js/pessoa.js"></script>
+<!-- Fim Javascripts -->
