@@ -45,46 +45,11 @@ module.exports = function(grunt) {
         }
     },
 
-    //realiza deploy
-    /*rsync:{
-        options: {
-            args: ['--verbose'],
-            compareMode: 'checksum',
-            recursive: true,
-            syncDest: true               
-        },
-        dist:{
-            options:{
-                src:"/var/www/html/locaweb-style/*",
-                dest: '/var/www/html/v300',
-                exclude: [
-                          "analise",
-                          "node_modules",
-                          "gruntfile.js",
-                          "package.json",
-                          "user_guide",
-                          "vendor",
-                          'composer.json',
-                          'composer.lock'
-                          ]
-            }
-        },
-        prod:{
-            options:{
-                ssh: true,
-                src:"/var/www/html/v300/*",
-                dest: '/home/ambientc/public_html/app-v300',
-                host: 'ambientc@ambientclinic.com.br',
-                delete: false 
-            }
-        }
-    }*/
-
 
   });//fim configuracoes de tarefas
 
   //agenda as tarefas
   grunt.registerTask('default',[]);
   grunt.registerTask('dev',['browserSync','watch']);
-  grunt.registerTask('deploy',['rsync']);
+
 };
