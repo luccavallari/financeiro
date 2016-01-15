@@ -6,3 +6,15 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
+
+input#email{
+    text-transform: lowercase;
+}
+
+label.error{
+    color: red;
+}
+
+.req:after {
+    content: '*';color: red;
+}

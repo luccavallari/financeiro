@@ -212,7 +212,7 @@ $(document).ready(function() {
         $('#cidade').find('option').remove().end().append('<option value=""></option>').val('');
 
         //preenche o select da cidade
-        consultar('#form_usuario', 'getCidade/'+$('#estado').val(), 'json', function() {}, function(itens){
+        consultar('#form_pessoa', 'getCidade/'+$('#estado').val(), 'json', function() {}, function(itens){
             $('#cidade').append(itens.cidades);
         });
     });
@@ -369,42 +369,6 @@ function retornoPesquisar(json, erro) {
 
 
 } 
-
-/*
- | -------------------------------------------------------------------
- | Funções "retornoDetalhar"
- | -------------------------------------------------------------------
- | Função que retorna resultado da função 'pesquisar', alem de preencher
- | os dados no formulario
- |
- */
-function retornoDetalhar(json, erro) {
-    $('#view-usuario').hide();
-    $('#view-form-usuario').hide();
-    $('#view-detalhe').show();
-
-    $('#usu-id').val(json.id);
-    $('#usu-nome').html(json.nome);
-    $('#usu-email').html(json.email);
-    $('#usu-nascimento').html(json.nascimento);
-    $('#usu-crmv').html(json.crmv);
-    $('#usu-sexo').html(json.sexo);
-    $('#usu-perfil').html(json.perfil);
-    $('#usu-origem').html(json.origem);
-    $('#usu-confirmado').html(json.confirmado);
-    $('#usu-telefone').html(json.telefone);
-
-    $('#usu-estado-cidade').html(json.estado+' / '+json.cidade);
-    $('#usu-bairro-cep').html(json.bairro+' / '+json.cep);
-    $('#usu-endereco').html(json.endereco+' / '+json.complemento);
-}
-
-function gerarPdf(){
-    var url = getPath('usuario/')+'gerarpdf/'+$('#usu-id').val();
-    console.log(url);    
-
-    window.open(url,'_blank');
-}
 
 //habilita a view do grid
 function showViewGrid()

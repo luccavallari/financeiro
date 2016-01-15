@@ -54,6 +54,127 @@
       <li><a href="javascript:showViewGrid();">Cliente</a></li>
       <li><a href="javascript:;" class="active">Cadastro</a></li>
     </ol>
+    
+    <fieldset>
+        <legend>Cadastrar Cliente</legend>
+    </fieldset>
+
+    <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="nome" class="req">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome">
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" class="form-control" id="cpf" name="cpf">
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="sexo" class="req">Sexo: </label>
+                <br>
+                <input name="sexo" value="M" required type="radio" /> Masculino &nbsp;
+                <input name="sexo" value="F" required type="radio" /> Feminino 
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="nascimento" >Nascimento:</label>
+                <input type="date" class="form-control" id="nascimento" name="nascimento">
+            </div>
+        </div>
+    </div>    
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="email" class="req">E-mail:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+        </div> 
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="telefone" class="req">Telefone:</label>
+                <input type="tel" class="form-control" id="telefone" name="telefone">
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="celular" class="req">Celular:</label>
+                <input type="tel" class="form-control" id="celular" name="celular">
+            </div>
+        </div>        
+    </div>
+    
+    <fieldset>
+        <legend>Endereço</legend>
+    </fieldset>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="endereco" class="req">Endereço:</label>
+                <input type="text" class="form-control" id="endereco" name="endereco">
+            </div>
+        </div>        
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="complemento">Complemento:</label>
+                <input type="text" class="form-control" id="complemento" name="complemento">
+            </div>
+        </div>        
+    </div>    
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="bairro" class="req">Bairro:</label>
+                <input type="text" class="form-control" id="nascimento" name="nascimento">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="cep">CEP:</label>
+                <input type="text" class="form-control" id="cep" name="cep">
+            </div>
+        </div> 
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="telefone" class="req">Estado:</label>
+                <select class="form-control" id="estado" name="estado"><option></option><?php echo $estados; ?></select>
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="cidade" class="req">Cidade:</label>
+                <select class="form-control" id="cidade" name="cidade"></select>
+            </div>
+        </div>        
+    </div>
+    <hr>
+    <?php echo form_close(); ?>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <a href="javascript:;" class="btn btn-primary">Salvar</a>
+                <a href="javascript:showViewGrid();" class="btn btn-default">Voltar</a>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- Fim Form -->
 

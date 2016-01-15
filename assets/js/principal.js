@@ -31,9 +31,10 @@ function enviarPorUri(url, datatype, antesEnviar, retorno)
 }
 
 
-function mostraErro(xhr, ajaxOptions, thrownError) { 
-    $("div#view-error").html(xhr.responseText);
-    locastyle.modal.open({target: "div#modal-error"});
+function mostraErro(xhr, ajaxOptions, thrownError) 
+{ 
+    $("div.msg-error").html(xhr.responseText);
+    $('div#modal-error').modal('show');
     loading('#load', 0);
 }
 
