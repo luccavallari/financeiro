@@ -23,38 +23,187 @@ class Pessoa extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-    public function setValidate()
+    //Seta as regras de validações dos campos
+    public function setRegrasValidacao()
     {
-      //Seta as regras de validações dos campos
-      $this->form_validation->set_rules('sexo', '<b>Sexo</b>', 'trim|required');
-      $this->form_validation->set_rules('email', '<b>E-mail</b>', 'trim|required|valid_email');
-      $this->form_validation->set_rules('nome', '<b>Nome</b>', 'trim|required');
-      $this->form_validation->set_rules('nascimento', '<b>Data de Nascimento</b>', 'trim|required');
-      $this->form_validation->set_rules('perfil', '<b>Perfil</b>', 'trim|required');
-     
-      if($this->input->post('perfil') == '1'){
-        $this->form_validation->set_rules('crmv', '<b>CRMV</b>', 'trim|required');
-      }
+        $this->form_validation->set_rules('perfil', '<b>Perfil</b>', 'trim|required');
+        $this->form_validation->set_rules('categoria', '<b>Categoria</b>', 'trim|required');
+        $this->form_validation->set_rules('nome', '<b>Nome</b>', 'trim|required');
+        $this->form_validation->set_rules('email', '<b>E-mail</b>', 'trim|required|valid_email');
+        
+        $tipo = $this->input->post('tipo');
+        
+        if($tipo === 'F') {
+            //pessoa fisica  
+            $this->form_validation->set_rules('sexo', '<b>Sexo</b>', 'trim|required');
+            $this->form_validation->set_rules('cpf', '<b>CPF</b>', 'trim|required');
+            $this->form_validation->set_rules('nascimento', '<b>Data de Nascimento</b>', 'trim|required');
+        } else {
+            //pesso juridica
+            //pessoa fisica  
+            $this->form_validation->set_rules('razao_social', '<b>Razão Social</b>', 'trim|required');
+            $this->form_validation->set_rules('cnpj', '<b>CNPJ</b>', 'trim|required');
+            $this->form_validation->set_rules('inscricao_estadual', '<b>Inscricão Estadual</b>', 'trim|required');
+        }
+        $this->form_validation->set_rules('telefone', '<b>Telefone</b>', 'trim|required');
+        $this->form_validation->set_rules('endereco', '<b>Endereço</b>', 'trim|required');
+        $this->form_validation->set_rules('bairro', '<b>Bairro</b>', 'trim|required');
+        $this->form_validation->set_rules('cidade', '<b>Cidade</b>', 'trim|required');
 
-      $existesenha = $this->input->post('existesenha');
-
-      //verifica se veio senha
-      if($existesenha != '0'){
-        $this->form_validation->set_rules('senha', '<b>Senha</b>', 'trim|required');
-        $this->form_validation->set_rules('cofsenha', '<b>Confirma Senha</b>', 'trim|required');
-      }
-
-      $this->form_validation->set_rules('telefone1', '<b>Telefone 1</b>', 'trim|required');
-      $this->form_validation->set_rules('endereco', '<b>Endereço</b>', 'trim|required');
-      $this->form_validation->set_rules('bairro', '<b>Bairro</b>', 'trim|required');
-      $this->form_validation->set_rules('cidade', '<b>Cidade</b>', 'trim|required');
-
-      $this->form_validation->set_error_delimiters('<span>', '</span>');        
+        $this->form_validation->set_error_delimiters('<span>', '</span>');        
     }         
+    
+    private function getDados()
+    {
+        //preenche os dados do endereco
+        $endereco = [
+            'endereco' => $this->input->post('endereco'),
+            'complemento' => $this->input->post('complemento'),
+            'bairro' => $this->input->post('bairro'),
+            'cep' => $this->input->post('cep'),
+            'cidade_id' => $this->input->post('cidade'),
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
+        ];
+        
+        $pessoa = [
+            'nome' => $this->input->post('nome'),
+            'email' => $this->input->post('email'),
+            'telefone' => $this->input->post('telefone'),
+            'celular' => $this->input->post('celular'),
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")        
+        ];
+        
+        if($this->input->post('endereco') == 'F'){
+            $fisica = [
+                'nascimento' => $this->Util->dataBanco($this->input->post('nascimento')),
+                'sexo' => $this->input->post('sexo'),
+                'cpf' => $this->input->post('cpf')
+            ];
+            
+        } else {
+            $juridica = [
+                'inscricao_estadual' => $this->input->post('inscricao_estadual'),
+                'cnpj' => $this->input->post('cnpj')
+            ];        
+        }
+
+        
+        $dados = ['endereco' => $endereco, 'pessoa' => $pessoa, 'fisica' => $fisica, 'juridica' => $juridica];
+        
+        return $dados;
+    }
+    
     
     public function create()
     {
-    
+        try {
+            $data = array();
+
+             //Seta as validações
+             $this->setRegrasValidacao();   
+
+            //Testa as validações
+            if ($this->form_validation->run() === false) {
+                $data['msg'] = array('tipo' => 'e', 'texto' => validation_errors());
+            } else {
+                $perfil = $this->input->post('perfil');
+                $crmv = $this->input->post('crmv');
+
+                $arrayUsuario = array(
+                    'nome' => $this->input->post('nome'),
+                    'nascimento' => $this->Util->dataBanco($this->input->post('nascimento')),
+                    'sexo' => $this->input->post('sexo'),
+                    'perfil' => $this->input->post('perfil'),
+                    'email' => $this->input->post('email'),
+                    'senha' => md5($this->input->post('senha')),
+                    'site' => 1,
+                    'confirma_email' => 1,
+                    'telefone1' => $this->input->post('telefone1'),
+                    'telefone2' => $this->input->post('telefone2'),
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                );
+
+
+                
+
+                //verifica se já existe no Banco de dados
+                $email_existe = $this->Crud->verificaExiste($this->tabela, $arrayUsuario, 'salvar','email');
+
+                if ($email_existe) {
+                    $data['msg'] = array('tipo' => 'a', 'texto' => 'O e-mail <b>' . $arrayUsuario['email'] . '</b> já existe.');
+                
+                }else if($crmv == '' && $perfil == '0'){
+
+                    //não é necessario cadastrar o veterinario
+
+                    //Condição para verificar se os dados foram gravados com exito
+                    $usuario_id = $this->Crud->create($this->tabela, $arrayUsuario,true);
+
+                    if ($usuario_id) {
+
+                        //adiciona o ultimo campo faltando a key do usuario
+                        $arrayEndereco['usuario_id']= $usuario_id; 
+
+                        //grava o endereco
+                        if(!$this->Crud->create('dbendereco', $arrayEndereco,false)){
+                          $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
+                        }else{
+                          $data['msg'] = array('tipo' => 's', 'texto' => 'Registro gravado com sucesso.');
+                        }
+
+                    } else {
+                        $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
+                    }
+
+                }else{
+
+                    //verifica se existe crmv
+                    $crmv_existe = $this->Crud->verificaExiste('dbveterinario', $arrayVeterinario, 'salvar','crmv');
+
+                    if ($crmv_existe) {
+                        $data['msg'] = array('tipo' => 'a', 'texto' => 'O crmv <b>' . $arrayVeterinario['crmv'] . '</b> já existe.');
+                    }else{
+
+                        //grava o usuario administrador com crmv
+                        //Condição para verificar se os dados foram gravados com exito
+                        $usuario_id = $this->Crud->create($this->tabela, $arrayUsuario,true);
+
+                        if ($usuario_id) {
+
+                            //adiciona o ultimo campo faltando a key do usuario
+                            $arrayEndereco['usuario_id']= $usuario_id; 
+
+                            //grava o endereco
+                            if(!$this->Crud->create('dbendereco', $arrayEndereco,false)){
+                              $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
+                            }else{
+
+                                //adiciona o ultimo campo faltando a key do usuario
+                                $arrayVeterinario['usuario_id']= $usuario_id; 
+
+                                //grava o veterinario
+                                if(!$this->Crud->create('dbveterinario', $arrayVeterinario,false)){
+                                  $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
+                                }else{
+                                  $data['msg'] = array('tipo' => 's', 'texto' => 'Registro gravado com sucesso.');
+                                }
+
+                            }
+
+                        } else {
+                            $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
+                        }
+
+                    }
+                }
+            }
+        } catch (Exception $exc) {
+            $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
+        }
+        echo json_encode($data);    
     }
     
     public function read($offset = 0)
