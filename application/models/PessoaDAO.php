@@ -42,7 +42,7 @@ class PessoaDAO extends CI_Model {
     public function countAll($filtro, $descricao)
     {
         $this->db->from($this->tabela);
-        $this->db->where('deleted', '0');
+        $this->db->where('deleted_at', '0');
         
         switch($filtro)
         {
@@ -70,8 +70,8 @@ class PessoaDAO extends CI_Model {
     //retorna todos os dados necessarios
     public function listAll($filtro, $descricao, $limite, $apartir) 
     {
-        $this->db->select("id, nome, email, perfil, telefone1, telefone2");
-        $this->db->where('deleted', '0');
+        $this->db->select("id, nome, email, telefone");
+        $this->db->where('deleted_at', '0');
         $this->db->order_by('id desc');
 
          switch($filtro)

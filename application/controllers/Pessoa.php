@@ -57,9 +57,52 @@ class Pessoa extends CI_Controller {
     
     }
     
-    public function read()
+    public function read($offset = 0)
     {
-        
+        try {
+             
+            $filtro = $this->input->post('filtro');
+            $descricao = $this->input->post('expressao');
+            
+            $limite =  10;
+            $config['base_url'] = site_url('pessoa/read/');
+            $config['total_rows'] = $this->PessoaDAO->countAll($filtro, $descricao);
+            $config['per_page'] = $limite;
+            $config['show_count'] = true;
+            $config['div'] = '#resposta_consulta'; 
+
+            $this->jquery_pagination->initialize($config);
+            $dados['paginacao'] = $this->jquery_pagination->create_links();
+
+            $resultado = $this->PessoaDAO->listAll($filtro, $descricao, $limite, $offset);
+
+            if ($resultado == null) {
+                echo '<b>Nenhum registro encontrado<b/>';
+            } else {
+                $this->table->set_template(array('table_open'=>'<table class="table table-hover table-bordered">'));
+                $this->table->set_empty('');//Se a tabela estiver vazia
+                $this->table->set_heading('Nome', 'Email', 'Telefones','Ação');//Cria o cabeçalho
+
+                //exibe a lista de usuario           
+                foreach ($resultado as $value) {
+
+                $this->table->add_row(
+                        $value->nome,
+                        $value->email,
+                        $value->telefone,
+                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="ls-ico-search"></i></a>'.
+                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="ls-ico-pencil"></i></a>'.
+                        '<a href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="ls-ico-remove"></i></a>'
+                  );           
+                }
+          
+                //gera a tabela e a paginação    
+                echo $this->table->generate();
+                echo $dados['paginacao'];
+            }
+        } catch (Exception $exc) {
+            echo 'Erro Sala->controller->consultar: ' . $exc->getMessage();
+        }        
     }
     
     public function readById()

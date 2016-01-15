@@ -4,7 +4,7 @@
       <li><a href="javascript:;" class="active">Clientes</a></li>
     </ol>
     
-    <form action="pessoa" class="form-horizontal" id="form_pessoa_consultar">
+    <?php echo form_open('pessoa', ['id' => 'form_pessoa_consultar', 'class' => 'form-horizontal']);?>
         <div class="form-group">
             <div class="col-md-2 col-xs-4">
                 <select id="filtrp" name="filtro" class="form-control" data-size="5">
@@ -18,7 +18,7 @@
                 <div class="input-group">
                     <input name="expressao" id="expressao" class="form-control"  placeholder="Consultar" />
                     <span class="input-group-btn">
-                        <a class="btn btn-default pesquisar" >
+                        <a href="javascript:consultar('#form_pessoa_consultar', 'read', 'html', function() {}, retornoConsulta);" class="btn btn-default pesquisar" >
                             <span class="glyphicon glyphicon-search"></span>
                             Consultar
                         </a>
@@ -31,20 +31,10 @@
                 </div>
             </div>
         </div>
-    </form>
+    <?php echo form_close(); ?>    
     
     <!-- Lista de pessoas -->
-    <table class="table table-hover table-bordered" >
-        <thead>
-            <tr>
-                <th class="col-md-4">Nome</th>
-                <th class="col-md-3">E-mail</th>
-                <th class="col-md-3">Telefone</th>
-                <th class="col-md-2">Opções</th>
-            </tr>
-        </thead>
-        <tbody class="lista-disciplina"></tbody>
-    </table>
+   <div id="resposta_consulta"></div>
 </main>
 <!-- Fim Grid -->
 
@@ -82,6 +72,7 @@
                 <input name="sexo" value="M" required type="radio" /> Masculino &nbsp;
                 <input name="sexo" value="F" required type="radio" /> Feminino 
             </div>
+            <b><label for="sexo" class="error"></label></b>
         </div>        
         
         <div class="col-md-3">
@@ -139,7 +130,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="bairro" class="req">Bairro:</label>
-                <input type="text" class="form-control" id="nascimento" name="nascimento">
+                <input type="text" class="form-control" id="bairro" name="bairro">
             </div>
         </div>
         
@@ -170,7 +161,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
-                <a href="javascript:;" class="btn btn-primary">Salvar</a>
+                <a href="javascript:;" id="salvar-pessoa" class="btn btn-primary">Salvar</a>
                 <a href="javascript:showViewGrid();" class="btn btn-default">Voltar</a>
             </div>
         </div>
