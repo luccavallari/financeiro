@@ -45,11 +45,39 @@
       <li><a href="javascript:;" class="active">Cadastro</a></li>
     </ol>
     
+
+    <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
+    <fieldset>
+        <legend>Tipo de Cadastro</legend>
+    </fieldset>    
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="tipo" class="req">Tipo de Cadastro:</label>
+                <br>
+                <input name="tipo" value="F" required type="radio" /> Pessoa Fisíca  &nbsp;
+                <input name="tipo" value="J" required type="radio" /> Pessoa Jurídica 
+            </div>
+            <b><label for="tipo" class="error"></label></b>
+        </div>            
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="categoria" class="req">Categoria:</label>
+                <br>
+                <input name="categoria" value="0" required type="radio" /> Funcionário  &nbsp;
+                <input name="categoria" value="1" required type="radio" /> Fornecedor  &nbsp;
+                <input name="categoria" value="2" required type="radio" /> Cliente
+            </div>
+            <b><label for="categoria" class="error"></label></b>
+        </div>            
+    </div>    
+    
     <fieldset>
         <legend>Cadastrar Cliente</legend>
     </fieldset>
-
-    <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
+    
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -94,14 +122,14 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="telefone" class="req">Telefone:</label>
-                <input type="tel" class="form-control" id="telefone" name="telefone">
+                <input type="tel" class="form-control" id="telefone" data-mask="(99) 9999-9999?" name="telefone">
             </div>
         </div>        
         
         <div class="col-md-3">
             <div class="form-group">
                 <label for="celular" class="req">Celular:</label>
-                <input type="tel" class="form-control" id="celular" name="celular">
+                <input type="tel" class="form-control" id="celular" data-mask="(99) 9999-9999?" name="celular">
             </div>
         </div>        
     </div>
@@ -137,7 +165,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="cep">CEP:</label>
-                <input type="text" class="form-control" id="cep" name="cep">
+                <input type="text" class="form-control" data-mask="999999-99" id="cep" name="cep">
             </div>
         </div> 
         
@@ -170,11 +198,12 @@
 <!-- Fim Form -->
 
 <!-- Javascripts -->
+<script src="<?php echo base_url();?>assets/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo base_url();?>assets/jquery-validation/messages_pt_BR.min.js"></script>
+<script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap-inputmask.min.js "></script>
 <script src="<?php echo base_url();?>assets/js/principal.js"></script>
 <script src="<?php echo base_url();?>assets/js/crud.js"></script>
 <script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
-<script src="<?php echo base_url();?>assets/jquery-validation/jquery.validate.min.js"></script>
-<script src="<?php echo base_url();?>assets/jquery-validation/messages_pt_BR.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
 <script src="<?php echo base_url();?>assets/js/pessoa.js"></script>
 <!-- Fim Javascripts -->

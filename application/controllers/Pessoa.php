@@ -26,10 +26,10 @@ class Pessoa extends CI_Controller {
     public function setValidate()
     {
       //Seta as regras de validações dos campos
-      $this->form_validation->set_rules('nome', '<b>Nome</b>', 'trim|required');
       $this->form_validation->set_rules('sexo', '<b>Sexo</b>', 'trim|required');
-      $this->form_validation->set_rules('nascimento', '<b>Data de Nascimento</b>', 'trim|required');
       $this->form_validation->set_rules('email', '<b>E-mail</b>', 'trim|required|valid_email');
+      $this->form_validation->set_rules('nome', '<b>Nome</b>', 'trim|required');
+      $this->form_validation->set_rules('nascimento', '<b>Data de Nascimento</b>', 'trim|required');
       $this->form_validation->set_rules('perfil', '<b>Perfil</b>', 'trim|required');
      
       if($this->input->post('perfil') == '1'){

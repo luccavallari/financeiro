@@ -11,6 +11,8 @@ $(document).ready(function() {
     //regras de validacao do formulario
     var validacao = $('#form_pessoa').validate({
       rules: {
+        tipo: { required: true},
+        categoria: { required: true},
         nome: { required: true},
         sexo: { required: true},
         nascimento: { required: true},
@@ -24,6 +26,8 @@ $(document).ready(function() {
         cidade: {required: true}
       },
       messages: {
+        tipo: { required: 'Preencha o campo Tipo cadastro' },
+        categoria: { required: 'Preencha o campo Categoria' },
         nome: { required: 'Preencha o campo Nome' },
         sexo: { required: 'Preencha o campo Sexo' },
         nascimento: { required: 'Preencha o campo Nascimento' },
@@ -41,10 +45,10 @@ $(document).ready(function() {
         if($("#form_pessoa").valid()){
 
             if($('#id').val() == '')
-                salvar_alterar('#form_pessoa', 'salvar', 'json',antesEnviar('#resposta','#load'),retornoSalvar);
+                salvar_alterar('#form_pessoa', 'create', 'json',antesEnviar('#resposta','#load'),retornoSalvar);
             else
-                 salvar_alterar('#form_pesspa', 'alterar', 'json',antesEnviar('#resposta','#load'),retornoAlterar);
-        }else{
+                 salvar_alterar('#form_pessoa', 'update', 'json',antesEnviar('#resposta','#load'),retornoAlterar);
+        }else {
             validacao.focusInvalid();
         }
     });
@@ -53,7 +57,7 @@ $(document).ready(function() {
     //consulta os dados da tela automaticamente
     consultar('#form_pessoa_consultar', 'read', 'html', function() {}, retornoConsulta);
 
-    $('#expressap').keyup(function() {
+    $('#expressao').keyup(function() {
         consultar('#form_pessoa_consultar', 'read', 'html', function() {loading('#load_consulta', 1); }, retornoConsulta);
     });    
 
@@ -237,6 +241,4 @@ function showViewForm()
 {
     $('.view-form').removeClass('hidden');
     $('.view-grid').addClass('hidden');
-    
-    $('html, body').animate({scrollTop: $('.view-form').offset().top }, 500);
 }
