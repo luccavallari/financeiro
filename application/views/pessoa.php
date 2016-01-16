@@ -47,32 +47,6 @@
     
 
     <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
-    <fieldset>
-        <legend>Tipo de Cadastro</legend>
-    </fieldset>    
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="tipo" class="req">Tipo de Cadastro:</label>
-                <br>
-                <input name="tipo" value="F" required type="radio" /> Pessoa Fisíca  &nbsp;
-                <input name="tipo" value="J" required type="radio" /> Pessoa Jurídica 
-            </div>
-            <b><label for="tipo" class="error"></label></b>
-        </div>            
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="categoria" class="req">Categoria:</label>
-                <br>
-                <input name="categoria" value="0" required type="radio" /> Funcionário  &nbsp;
-                <input name="categoria" value="1" required type="radio" /> Fornecedor  &nbsp;
-                <input name="categoria" value="2" required type="radio" /> Cliente
-            </div>
-            <b><label for="categoria" class="error"></label></b>
-        </div>            
-    </div>    
     
     <fieldset>
         <legend>Cadastrar Cliente</legend>
@@ -86,32 +60,6 @@
             </div>
         </div>        
         
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="cpf">CPF:</label>
-                <input type="text" class="form-control" id="cpf" name="cpf">
-            </div>
-        </div>        
-        
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="sexo" class="req">Sexo: </label>
-                <br>
-                <input name="sexo" value="M" required type="radio" /> Masculino &nbsp;
-                <input name="sexo" value="F" required type="radio" /> Feminino 
-            </div>
-            <b><label for="sexo" class="error"></label></b>
-        </div>        
-        
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="nascimento" >Nascimento:</label>
-                <input type="date" class="form-control" id="nascimento" name="nascimento">
-            </div>
-        </div>
-    </div>    
-    
-    <div class="row">
         <div class="col-md-3">
             <div class="form-group">
                 <label for="email" class="req">E-mail:</label>

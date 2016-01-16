@@ -11,11 +11,7 @@ $(document).ready(function() {
     //regras de validacao do formulario
     var validacao = $('#form_pessoa').validate({
       rules: {
-        tipo: { required: true},
-        categoria: { required: true},
         nome: { required: true},
-        sexo: { required: true},
-        nascimento: { required: true},
         email: { required: true},
         telefone: { minlength: 14},
         celular: { minlength: 14},
@@ -26,11 +22,7 @@ $(document).ready(function() {
         cidade: {required: true}
       },
       messages: {
-        tipo: { required: 'Preencha o campo Tipo cadastro' },
-        categoria: { required: 'Preencha o campo Categoria' },
         nome: { required: 'Preencha o campo Nome' },
-        sexo: { required: 'Preencha o campo Sexo' },
-        nascimento: { required: 'Preencha o campo Nascimento' },
         email: { required: 'Preencha o campo Email' },
         endereco: { required: 'Preencha o campo Endereço'},
         estado: { required: 'Preencha o campo Estado'},
@@ -185,47 +177,6 @@ function retornoPesquisar(json, erro) {
     $('#view-form-usuario').show();
     $('#view-detalhe').hide();
     $('.ac-toggle-senha').parent().removeClass('ls-display-none');
-
-    var senha = $('#senha');
-    var cofsenha = $('#cofsenha');
-
-    if(senha.attr('name')=='senha'){          
-      //remove o atributo name da senha
-      console.info("O atributo name da senha e cofsenha forma removidos");
-      senha.removeAttr('name');
-      cofsenha.removeAttr('name');
-      $('.ac-password').addClass('ls-display-none');
-
-      //remove as regras de validacao da senha
-      $("#senha").rules("remove");
-      $("#cofsenha").rules("remove");
-
-      //variavel flag para controlar a validacao 
-      $('#existesenha').val('0');
-
-    }
-
-    var crmv  = $("#crmv");
-
-    if($('#perfil').val() == '0'){
-      console.info("Torna o crmv opcional");
-
-      //remove a validacao obrigatoriedade
-      crmv.rules("remove","required");
-
-      //remove a formatacao de obrigatoriedade
-      crmv.prev().removeClass('ac-req');
-    }else{
-      console.info("Torna o crmv obrigatorio");
-
-      //adiciona novamente a validacao
-      crmv.rules( "add", {required: true, messages: {required: "Preencha o campo CRMV"}});
-
-      //adiciona a formatacao de obirgatoriedade
-      crmv.prev().addClass('ac-req');
-
-    }
-
 
 } 
 
