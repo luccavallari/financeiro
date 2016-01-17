@@ -36,20 +36,20 @@ class Jquery_pagination{
 	var $prev_link			= '«';
 	var $last_link			= 'Ultimo';
 	var $uri_segment		= 3;
-	var $full_tag_open		= '<div class="ls-pagination-filter"><ul class="ls-pagination">';
-	var $full_tag_close		= '</ul></div><!--pagination-->';
-	var $first_tag_open		= '<li class="prev page">';
+	var $full_tag_open		= '<nav><ul class="pagination">';
+	var $full_tag_close		= '</ul></nav>';
+	var $first_tag_open		= '<li>';
 	var $first_tag_close	= '</li>';
-	var $last_tag_open		= '<li class="next page">';
+	var $last_tag_open		= '<li>';
 	var $last_tag_close		= '</li>';
 	var $first_url			= ''; // Alternative URL for the First Page.
-	var $cur_tag_open		= '<li class="ls-active"><a href="javascript:;">';
+	var $cur_tag_open		= '<li class="active"><a href="javascript:;">';
 	var $cur_tag_close		= '</a></li>';
-	var $next_tag_open		= '<li class="next page">';
+	var $next_tag_open		= '<li>';
 	var $next_tag_close		= '</li>';
-	var $prev_tag_open		= '<li class="next page">';
+	var $prev_tag_open		= '<li>';
 	var $prev_tag_close		= '</li>';
-	var $num_tag_open		= '<li class="page">';
+	var $num_tag_open		= '<li >';
 	var $num_tag_close		= '</li>';
 	
 	// Added By Tohin
@@ -268,7 +268,7 @@ class Jquery_pagination{
 		return "<a href=\"#\"
 		         " . $this->anchor_class . "
 					onclick=\"$.post('". $this->base_url . $count ."', ". $this->additional_param .", function(data){
-					$('". $this->div . "').html(data);" . $this->js_rebind ."; $('.ac-align-right').parent().addClass('ls-txt-right'); $('.ac-align-center').parent().addClass('ls-txt-center'); }); return false;\">"
+					$('". $this->div . "').html(data);" . $this->js_rebind ."; }); return false;\">"
 				. $text .'</a>';
 	}
 	

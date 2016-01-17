@@ -142,9 +142,9 @@ class Pessoa extends CI_Controller {
                         $value->telefone,
                         $value->estado,
                         $value->cidade,
-                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>'.
-                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>'.
-                        '<a href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
+                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>&nbsp;'.
+                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;'.
+                        '<a class="btn btn-sm btn-default" href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
                   );           
                 }
           

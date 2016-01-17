@@ -88,19 +88,19 @@ class PessoaDAO extends CI_Model {
          switch($filtro)
         {
             case '0':
-                $this->db->like('nome', $descricao);
+                $this->db->like('t1.nome', $descricao);
             break;
                 
             case '1':
-                $this->db->like('email', $descricao);
+                $this->db->like('t1.email', $descricao);
             break;
 
             case '2':
-                $this->db->like('telefone1', $descricao);
+                $this->db->like('t1.telefone', $descricao);
             break;
 
             default:
-                $this->db->like('nome', $descricao);
+                $this->db->like('t1.nome', $descricao);
             break;
             
         }

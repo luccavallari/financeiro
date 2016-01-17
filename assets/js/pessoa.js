@@ -193,4 +193,6 @@ function showViewForm()
 {
     $('.view-form').removeClass('hidden');
     $('.view-grid').addClass('hidden');
+    
+    removerNotificacao('#resposta');
 }
