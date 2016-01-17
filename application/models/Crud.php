@@ -96,7 +96,7 @@ class Crud extends CI_Model {
     public function disable($table, $id, $coluna) 
     {
         $this->db->where($coluna, $id);
-        $this->db->update($table, array('deleted'=>'1'));
+        $this->db->update($table, array('deleted_at'=>'1'));
         
         if($this->db->affected_rows()>0){
             return true;
@@ -163,7 +163,7 @@ class Crud extends CI_Model {
     */     
     public function read($tabela, $id,$coluna_db) 
     {
-        $this->db->where('deleted', '0');
+        $this->db->where('deleted_at', '0');
         $this->db->where($coluna_db, $id);
         return $this->db->get($tabela)->result();
     }
@@ -178,7 +178,7 @@ class Crud extends CI_Model {
     */
     function consultAll($tabela,$coluna_db, $campo,$limite,$apartir,array $ordem) 
     {
-        $this->db->where('deleted', '0');
+        $this->db->where('deleted_at', '0');
         $this->db->like($coluna_db, $campo);
         $this->db->order_by($ordem['colunadb'],$ordem['tipo']);          
 
@@ -202,13 +202,13 @@ class Crud extends CI_Model {
     function countAll($table,$condicao,$coluna_db,$campo)
     {
         if($condicao){
-          $this->db->where('deleted', '0');
+          $this->db->where('deleted_at', '0');
           $this->db->where($coluna_db, $campo);
           $this->db->from($table);
           return $this->db->count_all_results();
 
         }else{
-          $this->db->where('deleted', '0');
+          $this->db->where('deleted_at', '0');
           $this->db->from($table);
           return $this->db->count_all_results();
         }

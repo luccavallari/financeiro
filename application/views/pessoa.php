@@ -33,6 +33,9 @@
         </div>
     <?php echo form_close(); ?>    
     
+    <!-- Resposta de exclusao de registro -->
+    <div id="resposta_excluir"></div>
+    
     <!-- Lista de pessoas -->
    <div id="resposta_consulta"></div>
 </main>

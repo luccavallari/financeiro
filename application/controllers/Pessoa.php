@@ -142,9 +142,9 @@ class Pessoa extends CI_Controller {
                         $value->telefone,
                         $value->estado,
                         $value->cidade,
-                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>&nbsp;'.
-                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;'.
-                        '<a class="btn btn-sm btn-default" href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
+                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consultar\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>&nbsp;'.
+                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consultar\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;'.
+                        '<a class="btn btn-sm btn-default" href="javascript:excluir(\'#form_pessoa_consultar\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
                   );           
                 }
           
@@ -167,9 +167,24 @@ class Pessoa extends CI_Controller {
         
     } 
     
-    public function destroy()
+    public function destroy($id = 0)
     {
-    
+        try {
+            $data = array();
+            //futuramente verificaria pendencia ou relacionamento
+            // talvez tratar com trigger quando excluir
+
+            if ($this->Crud->disable($this->tabela, $id, 'id')) {
+                $data['msg'] = array('tipo' => 's', 'texto' => 'Registro excluido com <b>sucesso</b>.');
+            } else {
+                $data['msg'] = array('tipo' => 'e', 'texto' => 'Desculpe, mas ocorreu algum erro ao <b>excluir</b> o registro.');
+            }
+            
+        } catch (Exception $exc) {
+            $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro ao excluir controller: <b>Pessoa.</b>' . $exc->getMessage());
+        }
+
+        echo json_encode($data);    
     }
     
     public function getCidade($id = 0) 
