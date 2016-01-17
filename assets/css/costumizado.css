@@ -18,3 +18,7 @@ label.error{
 .req:after {
     content: '*';color: red;
 }
+
+.pagination {
+    margin: 0px;
+}

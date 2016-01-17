@@ -12,8 +12,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="<?php echo base_url();?>pessoa">Clientes</a></li>
-            <li><a href="/movimentacao">Movimentação</a></li>
+            <li><a href="<?php echo base_url();?>pessoa">CLIENTES</a></li>
+            <li><a href="<?php echo base_url();?>movimentacao">MOVIMENTAÇÃO</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

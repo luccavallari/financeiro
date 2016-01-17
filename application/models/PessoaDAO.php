@@ -49,15 +49,15 @@ class PessoaDAO extends CI_Model {
         
         switch($filtro)
         {
-            case '0':
+            case '1':
                 $this->db->like('t1.nome', $descricao);
             break;
                 
-            case '1':
+            case '2':
                 $this->db->like('t1.email', $descricao);
             break;            
 
-            case '2':
+            case '3':
                 $this->db->like('t1.telefone', $descricao);
             break;
                 
@@ -87,15 +87,15 @@ class PessoaDAO extends CI_Model {
 
          switch($filtro)
         {
-            case '0':
+            case '1':
                 $this->db->like('t1.nome', $descricao);
             break;
                 
-            case '1':
+            case '2':
                 $this->db->like('t1.email', $descricao);
             break;
 
-            case '2':
+            case '3':
                 $this->db->like('t1.telefone', $descricao);
             break;
 
