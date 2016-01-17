@@ -41,25 +41,28 @@ class PessoaDAO extends CI_Model {
     //conta para gerar a paginacao
     public function countAll($filtro, $descricao)
     {
-        $this->db->from($this->tabela);
-        $this->db->where('deleted_at', '0');
+        $this->db->from($this->tabela.' t1');
+        $this->db->join('endereco t2', 't1.id = t2.pessoa_id', 'INNER');
+        $this->db->join('cidade t3', 't3.id = t2.cidade_id', 'INNER');
+        $this->db->join('estado t4', 't4.id = t3.estado', 'INNER');
+        $this->db->where('t1.deleted_at', '0');
         
         switch($filtro)
         {
             case '0':
-                $this->db->like('nome', $descricao);
+                $this->db->like('t1.nome', $descricao);
             break;
                 
             case '1':
-                $this->db->like('email', $descricao);
+                $this->db->like('t1.email', $descricao);
             break;            
 
             case '2':
-                $this->db->like('telefone1', $descricao);
+                $this->db->like('t1.telefone', $descricao);
             break;
                 
             default:
-                $this->db->like('nome', $descricao);
+                $this->db->like('t1.nome', $descricao);
             break;
             
         }
@@ -70,8 +73,16 @@ class PessoaDAO extends CI_Model {
     //retorna todos os dados necessarios
     public function listAll($filtro, $descricao, $limite, $apartir) 
     {
-        $this->db->select("id, nome, email, telefone");
-        $this->db->where('deleted_at', '0');
+        $this->db->select("t1.id, 
+                           t1.nome, 
+                           t1.email, 
+                           t1.telefone,
+                           t3.nome cidade,
+                           t4.nome estado");
+        $this->db->join('endereco t2', 't1.id = t2.pessoa_id', 'INNER');
+        $this->db->join('cidade t3', 't3.id = t2.cidade_id', 'INNER');
+        $this->db->join('estado t4', 't4.id = t3.estado', 'INNER');
+        $this->db->where('t1.deleted_at', '0');
         $this->db->order_by('id desc');
 
          switch($filtro)
@@ -96,9 +107,9 @@ class PessoaDAO extends CI_Model {
 
         //teste se é para pesquisar todos, ou com limite
         if($limite) {
-            return $this->db->get($this->tabela, $limite, $apartir)->result();
+            return $this->db->get($this->tabela.' t1', $limite, $apartir)->result();
         } else {
-            return $this->db->get($this->tabela)->result();
+            return $this->db->get($this->tabela.' t1')->result();
         }    
     }
 

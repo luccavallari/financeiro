@@ -45,8 +45,10 @@
       <li><a href="javascript:;" class="active">Cadastro</a></li>
     </ol>
     
+    <div id="resposta"></div>
 
     <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
+    <input type="hidden" id="id" name="id">
     
     <fieldset>
         <legend>Cadastrar Cliente</legend>

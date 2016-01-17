@@ -5,7 +5,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class Pessoa extends CI_Controller {
 
-    private $tabela = 'dbusuario';
+    private $tabela = 'pessoa';
 
     function __construct() 
     {
@@ -26,25 +26,8 @@ class Pessoa extends CI_Controller {
     //Seta as regras de validações dos campos
     public function setRegrasValidacao()
     {
-        $this->form_validation->set_rules('perfil', '<b>Perfil</b>', 'trim|required');
-        $this->form_validation->set_rules('categoria', '<b>Categoria</b>', 'trim|required');
         $this->form_validation->set_rules('nome', '<b>Nome</b>', 'trim|required');
         $this->form_validation->set_rules('email', '<b>E-mail</b>', 'trim|required|valid_email');
-        
-        $tipo = $this->input->post('tipo');
-        
-        if($tipo === 'F') {
-            //pessoa fisica  
-            $this->form_validation->set_rules('sexo', '<b>Sexo</b>', 'trim|required');
-            $this->form_validation->set_rules('cpf', '<b>CPF</b>', 'trim|required');
-            $this->form_validation->set_rules('nascimento', '<b>Data de Nascimento</b>', 'trim|required');
-        } else {
-            //pesso juridica
-            //pessoa fisica  
-            $this->form_validation->set_rules('razao_social', '<b>Razão Social</b>', 'trim|required');
-            $this->form_validation->set_rules('cnpj', '<b>CNPJ</b>', 'trim|required');
-            $this->form_validation->set_rules('inscricao_estadual', '<b>Inscricão Estadual</b>', 'trim|required');
-        }
         $this->form_validation->set_rules('telefone', '<b>Telefone</b>', 'trim|required');
         $this->form_validation->set_rules('endereco', '<b>Endereço</b>', 'trim|required');
         $this->form_validation->set_rules('bairro', '<b>Bairro</b>', 'trim|required');
@@ -62,6 +45,7 @@ class Pessoa extends CI_Controller {
             'bairro' => $this->input->post('bairro'),
             'cep' => $this->input->post('cep'),
             'cidade_id' => $this->input->post('cidade'),
+            'pessoa_id' => '',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s")
         ];
@@ -74,23 +58,8 @@ class Pessoa extends CI_Controller {
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s")        
         ];
-        
-        if($this->input->post('endereco') == 'F'){
-            $fisica = [
-                'nascimento' => $this->Util->dataBanco($this->input->post('nascimento')),
-                'sexo' => $this->input->post('sexo'),
-                'cpf' => $this->input->post('cpf')
-            ];
-            
-        } else {
-            $juridica = [
-                'inscricao_estadual' => $this->input->post('inscricao_estadual'),
-                'cnpj' => $this->input->post('cnpj')
-            ];        
-        }
-
-        
-        $dados = ['endereco' => $endereco, 'pessoa' => $pessoa, 'fisica' => $fisica, 'juridica' => $juridica];
+                
+        $dados = ['endereco' => $endereco, 'pessoa' => $pessoa];
         
         return $dados;
     }
@@ -108,98 +77,30 @@ class Pessoa extends CI_Controller {
             if ($this->form_validation->run() === false) {
                 $data['msg'] = array('tipo' => 'e', 'texto' => validation_errors());
             } else {
-                $perfil = $this->input->post('perfil');
-                $crmv = $this->input->post('crmv');
-
-                $arrayUsuario = array(
-                    'nome' => $this->input->post('nome'),
-                    'nascimento' => $this->Util->dataBanco($this->input->post('nascimento')),
-                    'sexo' => $this->input->post('sexo'),
-                    'perfil' => $this->input->post('perfil'),
-                    'email' => $this->input->post('email'),
-                    'senha' => md5($this->input->post('senha')),
-                    'site' => 1,
-                    'confirma_email' => 1,
-                    'telefone1' => $this->input->post('telefone1'),
-                    'telefone2' => $this->input->post('telefone2'),
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s")
-                );
-
-
                 
-
-                //verifica se já existe no Banco de dados
-                $email_existe = $this->Crud->verificaExiste($this->tabela, $arrayUsuario, 'salvar','email');
-
-                if ($email_existe) {
-                    $data['msg'] = array('tipo' => 'a', 'texto' => 'O e-mail <b>' . $arrayUsuario['email'] . '</b> já existe.');
+                //pega todos os dados necessarios da view
+                $pessoa = $this->getDados();
                 
-                }else if($crmv == '' && $perfil == '0'){
+                //Condição para verificar se os dados foram gravados com exito
+                $pessoa_id = $this->Crud->create($this->tabela, $pessoa['pessoa'], true);
 
-                    //não é necessario cadastrar o veterinario
+                if($pessoa_id) {
+                    
+                    //adiciona o ultimo campo faltando a key do pessoa
+                    $pessoa['endereco']['pessoa_id'] = $pessoa_id;
 
-                    //Condição para verificar se os dados foram gravados com exito
-                    $usuario_id = $this->Crud->create($this->tabela, $arrayUsuario,true);
-
-                    if ($usuario_id) {
-
-                        //adiciona o ultimo campo faltando a key do usuario
-                        $arrayEndereco['usuario_id']= $usuario_id; 
-
-                        //grava o endereco
-                        if(!$this->Crud->create('dbendereco', $arrayEndereco,false)){
-                          $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
-                        }else{
-                          $data['msg'] = array('tipo' => 's', 'texto' => 'Registro gravado com sucesso.');
-                        }
-
-                    } else {
-                        $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
+                    //grava o endereco
+                    if(!$this->Crud->create('endereco', $pessoa['endereco'], false)) {
+                      $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->pessoa->salvar->endereco: Erro ao salvar o endereco do pessoa');
+                    }else {
+                      $data['msg'] = array('tipo' => 's', 'texto' => 'Registro gravado com sucesso.');
                     }
 
-                }else{
-
-                    //verifica se existe crmv
-                    $crmv_existe = $this->Crud->verificaExiste('dbveterinario', $arrayVeterinario, 'salvar','crmv');
-
-                    if ($crmv_existe) {
-                        $data['msg'] = array('tipo' => 'a', 'texto' => 'O crmv <b>' . $arrayVeterinario['crmv'] . '</b> já existe.');
-                    }else{
-
-                        //grava o usuario administrador com crmv
-                        //Condição para verificar se os dados foram gravados com exito
-                        $usuario_id = $this->Crud->create($this->tabela, $arrayUsuario,true);
-
-                        if ($usuario_id) {
-
-                            //adiciona o ultimo campo faltando a key do usuario
-                            $arrayEndereco['usuario_id']= $usuario_id; 
-
-                            //grava o endereco
-                            if(!$this->Crud->create('dbendereco', $arrayEndereco,false)){
-                              $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
-                            }else{
-
-                                //adiciona o ultimo campo faltando a key do usuario
-                                $arrayVeterinario['usuario_id']= $usuario_id; 
-
-                                //grava o veterinario
-                                if(!$this->Crud->create('dbveterinario', $arrayVeterinario,false)){
-                                  $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar->endereco: Erro ao salvar o endereco do usuario');
-                                }else{
-                                  $data['msg'] = array('tipo' => 's', 'texto' => 'Registro gravado com sucesso.');
-                                }
-
-                            }
-
-                        } else {
-                            $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->usuario->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
-                        }
-
-                    }
+                } else {
+                    $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->pessoa->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
                 }
             }
+            
         } catch (Exception $exc) {
             $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
         }
@@ -230,18 +131,20 @@ class Pessoa extends CI_Controller {
             } else {
                 $this->table->set_template(array('table_open'=>'<table class="table table-hover table-bordered">'));
                 $this->table->set_empty('');//Se a tabela estiver vazia
-                $this->table->set_heading('Nome', 'Email', 'Telefones','Ação');//Cria o cabeçalho
+                $this->table->set_heading('Nome', 'Email', 'Telefones', 'Estado', 'Cidade', 'Ação');//Cria o cabeçalho
 
-                //exibe a lista de usuario           
+                //exibe a lista de pessoa           
                 foreach ($resultado as $value) {
 
                 $this->table->add_row(
                         $value->nome,
                         $value->email,
                         $value->telefone,
-                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="ls-ico-search"></i></a>'.
-                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="ls-ico-pencil"></i></a>'.
-                        '<a href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="ls-ico-remove"></i></a>'
+                        $value->estado,
+                        $value->cidade,
+                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>'.
+                        '<a href="javascript:pesquisar(\'#form_pessoa_consulta\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>'.
+                        '<a href="javascript:excluir(\'#form_pessoa_consulta\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
                   );           
                 }
           
@@ -291,7 +194,7 @@ class Pessoa extends CI_Controller {
             }
             
         } catch (Exception $exc) {
-            $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro ao excluir controller: <b>Usuario.</b>' . $exc->getMessage());
+            $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro ao excluir controller: <b>pessoa.</b>' . $exc->getMessage());
         }
       echo json_encode($data);
     }

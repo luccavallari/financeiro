@@ -82,14 +82,15 @@ function retornoSalvar(json, erro) {
     notificacao(json.msg, '#resposta');
 
     if(json.msg.tipo == "s"){
-        consultar('#form_usuario_consulta', 'consultar', 'html', function() {}, retornoConsulta);
-        refreshForm('#form_usuario');
+        consultar('#form_pessoa_consultar', 'read', 'html', function() {loading('#load_consulta', 1); }, retornoConsulta);
+        refreshForm('#form_pessoa');
         $('input[type=tel]').val('');
     }
+    
     loading('#load', 0);
 
     $('html, body').animate({
-        scrollTop: $('#view-form-usuario').offset().top
+        scrollTop: $('.view-form').offset().top
     }, 1000);
 }
 
@@ -104,13 +105,13 @@ function retornoAlterar(json, erro) {
     notificacao(json.msg, '#resposta');
 
     if(json.msg.tipo == "s") {
-        consultar('#form_usuario_consulta', 'consultar', 'html', function() {}, retornoConsulta);
+        consultar('#form_pessoa_consultar', 'read', 'html', function() {loading('#load_consulta', 1); }, retornoConsulta);
     }
     
     loading('#load', 0);
 
     $('html, body').animate({
-        scrollTop: $('#view-form-usuario').offset().top
+        scrollTop: $('.view-form').offset().top
     }, 1000);
 }
 
@@ -125,7 +126,7 @@ function retornoExcluir(json,erro) {
     notificacao(json.msg, '#resposta_excluir');
 
     if(json.msg.tipo == "s") {
-        consultar('#form_usuario_consulta', 'consultar', 'html', function() {loading('#load_consulta', 1); }, retornoConsulta);
+        consultar('#form_pessoa_consultar', 'read', 'html', function() {loading('#load_consulta', 1); }, retornoConsulta);
         refreshForm('#form_usuario');
     }
     
