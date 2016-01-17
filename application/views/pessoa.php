@@ -119,13 +119,13 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="cep">CEP:</label>
-                <input type="number" class="form-control" data-mask="999999-99" id="cep" name="cep">
+                <input type="text" class="form-control" data-mask="999999-99" id="cep" name="cep">
             </div>
         </div> 
         
         <div class="col-md-3">
             <div class="form-group">
-                <label for="telefone" class="req">Estado:</label>
+                <label for="estado" class="req">Estado:</label>
                 <select class="form-control" id="estado" name="estado"><option></option><?php echo $estados; ?></select>
             </div>
         </div>        
@@ -150,6 +150,108 @@
     </div>
 </main>
 <!-- Fim Form -->
+
+<!-- Detail -->
+<main class="container view-detail hidden">
+    <ol class="breadcrumb">
+      <li><a href="javascript:showViewGrid();">Cliente</a></li>
+      <li><a href="javascript:;" class="active">Detalhes da pessoa</a></li>
+    </ol>
+    
+    <fieldset>
+        <legend>Dados do Cliente</legend>
+    </fieldset>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Nome:</label>
+                <p id="detail-nome"></p>
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>E-mail:</label>
+                <p id="detail-email"></p>
+            </div>
+        </div> 
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Telefone:</label>
+                <p id="detail-telefone"></p>
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Celular:</label>
+                <p id="detail-celular"></p>
+            </div>
+        </div>        
+    </div>
+    
+    <fieldset>
+        <legend>Dados de Endereço</legend>
+    </fieldset>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Endereço:</label>
+                <p id="detail-endereco"></p>
+            </div>
+        </div>        
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Complemento:</label>
+                <p id="detail-complemento"></p>
+            </div>
+        </div>        
+    </div>    
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Bairro:</label>
+                <p id="detail-bairro"></p>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>CEP:</label>
+                <p id="detail-cep"></p>
+            </div>
+        </div> 
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Estado:</label>
+                <p id="detail-estado"></p>
+            </div>
+        </div>        
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Cidade:</label>
+                <p id="detail-cidade"></p>
+            </div>
+        </div>        
+    </div>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <a href="javascript:showViewGrid();" class="btn btn-default">Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Fim Detail -->
 
 <!-- Javascripts -->
 <script src="<?php echo base_url();?>assets/jquery-validation/jquery.validate.min.js"></script>

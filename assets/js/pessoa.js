@@ -145,7 +145,7 @@ function retornoExcluir(json,erro) {
  | -------------------------------------------------------------------
  | Funções "retornoPesquisar"
  | -------------------------------------------------------------------
- | Função que retorna resultado da função 'pesquisar', alem de preencher
+ | Função que retorna resultado da função 'readById', alem de preencher
  | os dados no formulario
  |
  */
@@ -154,17 +154,8 @@ function retornoPesquisar(json, erro) {
     $('#id').val(json.id);
     $('#nome').val(json.nome);
     $('#email').val(json.email);
-    
-    if(json.sexo == 'm'){
-      $("input[name=sexo][value='m']").prop("checked", true);
-    }else{
-      $("input[name=sexo][value='f']").prop("checked", true);
-    }
-      
     $('#telefone').val(json.telefone);
     $('#celular').val(json.telefone);
-
-    $('#estado').val(json.estado);
     
     //preenche o select da cidade
     consultar('#form_pessoa', 'getCidade/'+json.estado, 'json', function() {}, function(itens){
@@ -172,6 +163,7 @@ function retornoPesquisar(json, erro) {
         $('#cidade').val(json.cidade);
     });
     
+    $('#estado').val(json.estado);
     $('#endereco_id').val(json.endereco_id);
     $('#cep').val(json.cep);
     $('#bairro').val(json.bairro);
@@ -179,6 +171,29 @@ function retornoPesquisar(json, erro) {
     $('#complemento').val(json.complemento);
 
     showViewForm();
+}  
+
+/*
+ | -------------------------------------------------------------------
+ | Funções "retornoDetalhar"
+ | -------------------------------------------------------------------
+ | Função que retorna resultado da função 'detail', alem de preencher
+ | os dados no formulario
+ |
+ */
+function retornoDetalhar(json, erro) {
+    $('#detail-nome').html(json.nome);
+    $('#detail-email').html(json.email);
+    $('#detail-telefone').html(json.telefone);
+    $('#detail-celular').html(json.telefone);
+    $('#detail-estado').html(json.estado);
+    $('#detail-cidade').html(json.cidade);
+    $('#detail-cep').html(json.cep);
+    $('#detail-bairro').html(json.bairro);
+    $('#detail-endereco').html(json.endereco);
+    $('#detail-complemento').html(json.complemento);
+
+    showViewDetail();
 } 
 
 //habilita a view do grid
@@ -186,12 +201,24 @@ function showViewGrid()
 {
     $('.view-grid').removeClass('hidden');
     $('.view-form').addClass('hidden');
+    $('.view-detail').addClass('hidden');
 }
 
 //habilita a view do formulario
 function showViewForm()
 {
     $('.view-form').removeClass('hidden');
+    $('.view-grid').addClass('hidden');
+    $('.view-detail').addClass('hidden');
+    
+    removerNotificacao('#resposta');
+}
+
+//habilita a view de detalhar
+function showViewDetail()
+{
+    $('.view-detail').removeClass('hidden');
+    $('.view-form').addClass('hidden');
     $('.view-grid').addClass('hidden');
     
     removerNotificacao('#resposta');

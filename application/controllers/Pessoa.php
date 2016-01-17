@@ -136,7 +136,7 @@ class Pessoa extends CI_Controller {
             if ($resultado == null) {
                 echo '<b>Nenhum registro encontrado<b/>';
             } else {
-                $this->table->set_template(array('table_open'=>'<table class="table table-hover table-bordered">'));
+                $this->table->set_template(array('table_open'=>'<table class="table table-hover table-bordered table-condensed">'));
                 $this->table->set_empty('');//Se a tabela estiver vazia
                 $this->table->set_heading('Nome', 'Email', 'Telefones', 'Estado', 'Cidade', 'Ação');//Cria o cabeçalho
 
@@ -149,7 +149,7 @@ class Pessoa extends CI_Controller {
                         $value->telefone,
                         $value->estado,
                         $value->cidade,
-                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consultar\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>&nbsp;'.
+                        '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consultar\',\'detail/'.$value->id.'\',\'json\', function(){}, retornoDetalhar);" title="Detalhar" ><i class="glyphicon glyphicon-search"></i></a>&nbsp;'.
                         '<a class="btn btn-sm btn-default" href="javascript:pesquisar(\'#form_pessoa_consultar\',\'readById/'.$value->id.'\',\'json\', function(){}, retornoPesquisar);" title="Alterar" ><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;'.
                         '<a class="btn btn-sm btn-default" href="javascript:excluir(\'#form_pessoa_consultar\', \'destroy/'.$value->id.'\',\'' . $value->nome . '\', \'json\',antesEnviar(\'#resposta_excluir\',\'#load_consulta\'),retornoExcluir);" title="Excluir" ><i class="glyphicon glyphicon-trash"></i></a>'
                   );           
@@ -186,6 +186,27 @@ class Pessoa extends CI_Controller {
         echo json_encode($data);    
     }
     
+    
+    public function detail($id)
+    {
+        $data = array();
+
+        try {
+
+            $pessoa = $this->PessoaDAO->detail($id);
+
+            if(!$pessoa){
+                $data['msg'] = array('tipo' => 'e', 'texto' => 'O registro com codigo <b>'.$id.'</b> não existe!');
+            }else {              
+                $data = $pessoa;
+            }
+
+        } catch (Exception $exc) {
+            $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
+        }
+
+        echo json_encode($data);       
+    }
     
     public function update()
     {
