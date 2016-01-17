@@ -15,6 +15,7 @@ class Pessoa extends CI_Controller {
         $this->load->model('PessoaDAO', '', true);
     }
     
+    
 	public function index()
 	{
 		$this->load->view('header', ['title'=>'Cadastro de cliente, fornecedores, funcionarios']);
@@ -23,6 +24,7 @@ class Pessoa extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+    
     //Seta as regras de validações dos campos
     public function setRegrasValidacao()
     {
@@ -36,21 +38,24 @@ class Pessoa extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span>', '</span>');        
     }         
     
+    
     private function getDados()
     {
         //preenche os dados do endereco
         $endereco = [
+            'id' => $this->input->post('endereco_id'),
             'endereco' => $this->input->post('endereco'),
             'complemento' => $this->input->post('complemento'),
             'bairro' => $this->input->post('bairro'),
             'cep' => $this->input->post('cep'),
             'cidade_id' => $this->input->post('cidade'),
-            'pessoa_id' => '',
+            'pessoa_id' => $this->input->post('id'),
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s")
         ];
         
         $pessoa = [
+            'id' => $this->input->post('id'),
             'nome' => $this->input->post('nome'),
             'email' => $this->input->post('email'),
             'telefone' => $this->input->post('telefone'),
@@ -104,8 +109,10 @@ class Pessoa extends CI_Controller {
         } catch (Exception $exc) {
             $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
         }
+        
         echo json_encode($data);    
     }
+    
     
     public function read($offset = 0)
     {
@@ -157,6 +164,7 @@ class Pessoa extends CI_Controller {
         }        
     }
     
+    
     public function readById($id)
     {
         $data = array();
@@ -178,10 +186,45 @@ class Pessoa extends CI_Controller {
         echo json_encode($data);    
     }
     
+    
     public function update()
     {
+        try {
+            $data = array();
+
+             //Seta as validações
+             $this->setRegrasValidacao();   
+
+            //Testa as validações
+            if ($this->form_validation->run() === false) {
+                $data['msg'] = array('tipo' => 'e', 'texto' => validation_errors());
+            } else {
+                
+                //pega todos os dados necessarios da view
+                $pessoa = $this->getDados();
+                
+                //Condição para verificar se os dados foram gravados com exito
+                if($this->Crud->update($this->tabela, $pessoa['pessoa'])) {
+                    
+                    //grava o endereco
+                    if(!$this->Crud->update('endereco', $pessoa['endereco'])) {
+                      $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->pessoa->salvar->endereco: Erro ao salvar o endereco da pessoa');
+                    }else {
+                      $data['msg'] = array('tipo' => 's', 'texto' => 'Registro <b>alterado</b> com sucesso.');
+                    }
+
+                } else {
+                    $data['msg'] = array('tipo' => 'e', 'texto' => 'Erro->pessoa->salvar: Por favor contate o Administrador: Allan, allangcruz@gmail.com');
+                }
+            }
+            
+        } catch (Exception $exc) {
+            $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
+        }
         
+        echo json_encode($data);        
     } 
+    
     
     public function destroy($id = 0)
     {
@@ -202,6 +245,7 @@ class Pessoa extends CI_Controller {
 
         echo json_encode($data);    
     }
+    
     
     public function getCidade($id = 0) 
     {

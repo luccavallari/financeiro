@@ -30,7 +30,14 @@ $(document).ready(function() {
         cidade: { required: 'Preencha o campo Cidade'}
       }
     });
-
+    
+    //exibi a funxionalidad de adicionar
+    $('.novo-cadastro').click(function(){
+        showViewForm();
+        $('#id').val('');
+        $('#endereco_id').val('');
+        refreshForm('#form_pessoa');
+    });
 
     //realiza a operação de salvar
     $('#salvar-pessoa').click(function(){
@@ -165,6 +172,7 @@ function retornoPesquisar(json, erro) {
         $('#cidade').val(json.cidade);
     });
     
+    $('#endereco_id').val(json.endereco_id);
     $('#cep').val(json.cep);
     $('#bairro').val(json.bairro);
     $('#endereco').val(json.endereco);

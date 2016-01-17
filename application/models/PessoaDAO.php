@@ -120,6 +120,7 @@ class PessoaDAO extends CI_Model {
                            t1.nome, 
                            t1.email, 
                            t1.telefone,
+                           t2.id endereco_id,
                            t2.cidade_id cidade,
                            t2.endereco,
                            t2.complemento,

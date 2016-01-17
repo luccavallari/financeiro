@@ -22,7 +22,7 @@
                             <span class="glyphicon glyphicon-search"></span>
                             Consultar
                         </a>
-                        <a href="javascript:showViewForm();" class="btn btn-primary" >
+                        <a href="javascript:;" class="btn btn-primary novo-cadastro" >
                             <span class="glyphicon glyphicon-plus">
                             </span> 
                             Novo
@@ -52,6 +52,7 @@
 
     <?php echo form_open('pessoa', ['id' => 'form_pessoa']);?>
     <input type="hidden" id="id" name="id">
+    <input type="hidden" id="endereco_id" name="endereco_id">
     
     <fieldset>
         <legend>Cadastrar Cliente</legend>
@@ -118,7 +119,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="cep">CEP:</label>
-                <input type="text" class="form-control" data-mask="999999-99" id="cep" name="cep">
+                <input type="number" class="form-control" data-mask="999999-99" id="cep" name="cep">
             </div>
         </div> 
         
