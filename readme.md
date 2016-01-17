@@ -18,3 +18,12 @@ Colaboradores:
 * Jquery - 2.2.0
 * Bootstrap - 3.3.6
 * jquery-validate - 1.14.0
+
+#### Como instalar
+
+Copie a url abaixo
+
+* git clone https://github.com/Allangcruz/financeiro.git
+
+Restaure a base de dados que se encontra na raiz do projeto: banco-de-dados.sql
+
