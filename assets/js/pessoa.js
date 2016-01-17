@@ -145,26 +145,22 @@ function retornoExcluir(json,erro) {
 function retornoPesquisar(json, erro) {
     removerNotificacao('#resposta');
     $('#id').val(json.id);
-    $('#vet_id').val(json.vet_id);
     $('#nome').val(json.nome);
     $('#email').val(json.email);
-    $('#perfil').val(json.perfil);
-    $('#nascimento').val(json.nascimento);
-    $('#crmv').val(json.crmv);
     
     if(json.sexo == 'm'){
-      $("input[name=sexo][value='m']").prop("checked",true);
+      $("input[name=sexo][value='m']").prop("checked", true);
     }else{
-      $("input[name=sexo][value='f']").prop("checked",true);
+      $("input[name=sexo][value='f']").prop("checked", true);
     }
       
-    $('#telefone1').val(json.telefone1);
-    $('#telefone2').val(json.telefone2);
+    $('#telefone').val(json.telefone);
+    $('#celular').val(json.telefone);
 
     $('#estado').val(json.estado);
     
     //preenche o select da cidade
-    consultar('#form_usuario', 'getCidade/'+json.estado, 'json', function() {}, function(itens){
+    consultar('#form_pessoa', 'getCidade/'+json.estado, 'json', function() {}, function(itens){
         $('#cidade').append(itens.cidades);
         $('#cidade').val(json.cidade);
     });
@@ -174,11 +170,7 @@ function retornoPesquisar(json, erro) {
     $('#endereco').val(json.endereco);
     $('#complemento').val(json.complemento);
 
-    $('#view-usuario').hide();
-    $('#view-form-usuario').show();
-    $('#view-detalhe').hide();
-    $('.ac-toggle-senha').parent().removeClass('ls-display-none');
-
+    showViewForm();
 } 
 
 //habilita a view do grid

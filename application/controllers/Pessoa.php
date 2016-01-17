@@ -157,9 +157,25 @@ class Pessoa extends CI_Controller {
         }        
     }
     
-    public function readById()
+    public function readById($id)
     {
-    
+        $data = array();
+
+        try {
+
+            $pessoa = $this->PessoaDAO->readById($id);
+
+            if(!$pessoa){
+                $data['msg'] = array('tipo' => 'e', 'texto' => 'O registro com codigo <b>'.$id.'</b> não existe!');
+            }else {              
+                $data = $pessoa;
+            }
+
+        } catch (Exception $exc) {
+            $data['msg'] = array('tipo' => 'e', 'texto' => $exc->getMessage());
+        }
+
+        echo json_encode($data);    
     }
     
     public function update()

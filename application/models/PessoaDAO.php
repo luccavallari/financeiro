@@ -113,5 +113,25 @@ class PessoaDAO extends CI_Model {
         }    
     }
 
+    //retorna apenas um registro para edicao
+    public function readById($id)
+    {
+        $this->db->select("t1.id, 
+                           t1.nome, 
+                           t1.email, 
+                           t1.telefone,
+                           t2.cidade_id cidade,
+                           t2.endereco,
+                           t2.complemento,
+                           t2.bairro,
+                           t2.cep,
+                           t3.estado");
+        $this->db->join('endereco t2', 't1.id = t2.pessoa_id', 'INNER');
+        $this->db->join('cidade t3', 't3.id = t2.cidade_id', 'INNER');
+        $this->db->where('t1.deleted_at', '0');
+        $this->db->where('t1.id', $id);
+        $this->db->limit(1); 
 
+        return $this->db->get($this->tabela.' t1')->row();     
+    }
 }
