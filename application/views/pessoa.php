@@ -260,6 +260,5 @@
 <script src="<?php echo base_url();?>assets/js/principal.js"></script>
 <script src="<?php echo base_url();?>assets/js/crud.js"></script>
 <script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
-<script src="<?php echo base_url();?>assets/js/notificacao.js"></script>
 <script src="<?php echo base_url();?>assets/js/pessoa.js"></script>
 <!-- Fim Javascripts -->
